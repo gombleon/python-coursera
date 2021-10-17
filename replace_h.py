@@ -1,0 +1,5 @@
+string = input()
+n1 = string.find('h')
+n2 = string.rfind('h')
+slice = string[n1 + 1: n2].replace('h', 'H')
+print(string[0: n1 + 1:] + slice + string[n2:])

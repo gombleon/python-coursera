@@ -1,0 +1,8 @@
+people = map(int, input().split())
+sortedPeople = sorted(enumerate(people), key=lambda x: x[1])
+taxi = map(int, input().split())
+sortedTaxi = sorted(enumerate(taxi), key=lambda x: x[1], reverse=True)
+ans = zip(sortedPeople, sortedTaxi)
+sortedAns = sorted(ans, key=lambda x: x[0][0])
+print(*map(lambda x: x[1][0], sortedAns))
+print(sortedAns[1][0])
