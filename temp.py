@@ -1,7 +1,12 @@
-a = list(map(int, input().split()))
-j = 0
-for i in range(len(a)):
-    if a[i] != 0 and a[j] == 0:
-        a[i], a[j] = a[j], a[i]
-        j += 1
-print(*a)
+f = lambda x: (x + 64 / x) / 2
+a = 1
+
+
+def repeat(f, a):
+    yield a
+    for v in repeat(f, f(a)):
+        yield v
+
+for x, i in zip(repeat(f, a), range(10)):
+    print(x)
+

@@ -1,3 +1,8 @@
+class ComplexError(BaseException):
+    def __init__(self, Complex, other):
+        self.arg1 = Complex
+        self.arg2 = other
+
 class Complex:
     def __init__(self, re, im):
         self.re = re
@@ -10,15 +15,24 @@ class Complex:
         strRep += 'i'
         return strRep
     def __add__(self, other):
-        re = self.re + other.re
-        im = self.im + other.im
-        return Complex(re, im)
+        newRe = self.re + other.re
+        newIm = self.im + other.im
+        return Complex(newRe, newIm)
     def __mul__(self, other):
-        re = self.re * other.re - self.im * other.im
-        im = self.re * other.im + self.im * other.re
-        return Complex(re, im)
+        if isinstance(other, Complex):
+            newRe = self.re * other.re - self.im * other.im
+            newIm = self.re * other.im + self.im * other.re
+        elif isinstance(other, int) or isinstance(other, float):
+            newRe = self.re * other
+            newIm = self.im * other
+        else:
+            raise ComplexError(self, other)
+        return Complex(newRe, newIm)
+        __rmul__ = __mul__
 
 a = Complex(1, 1)
-b = Complex(2, -3)
-print(a * b)
-print(str(a))
+try:
+    res = a * 'abc'
+    print(res)
+except ComplexError as ce:
+    print('Error in mul with args:', ce.arg1, ce.arg2)
