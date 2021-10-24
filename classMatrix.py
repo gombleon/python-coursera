@@ -1,6 +1,6 @@
 from sys import stdin
 import copy
-
+import numpy
 
 
 from typing import List, Any
@@ -53,14 +53,25 @@ class Matrix:
         return Matrix(mulmatrix)
 
     def transpose(self):
-        transMatrix = []
+        transmatrix = []
         for j in range(self.size()[1]):
             tempList = []
             for i in range(self.size()[0]):
                 tempList.append(self.matrix[i][j])
-            transMatrix.append(tempList)
-        self.matrix = transMatrix
-        return Matrix(transMatrix)
+            transmatrix.append(tempList)
+        self.matrix = transmatrix
+        return Matrix(transmatrix)
+
+    def solve(self, right_side):
+        right_side = np.array(right_side).reshape(3, 1)
+        matrix_coeff = numpy.array(self.matrix)
+        try:
+            inverse_matrix = numpy.linalg.inv(matrix_coeff)
+            return sum((Matrix(inverse_matrix) *
+                        Matrix(right_side)).matrix, [])
+        except numpy.linalg.LinAlgError:
+            print('Not invertible. Skip this one.')
+            pass
 
     @staticmethod
     def transposed(matrix):

@@ -3,10 +3,12 @@ class ComplexError(BaseException):
         self.arg1 = Complex
         self.arg2 = other
 
+
 class Complex:
     def __init__(self, re, im):
         self.re = re
         self.im = im
+
     def __str__(self):
         strRep = str(self.re)
         if self.im > 0:
@@ -14,10 +16,12 @@ class Complex:
         strRep += str(self.im)
         strRep += 'i'
         return strRep
+
     def __add__(self, other):
         newRe = self.re + other.re
         newIm = self.im + other.im
         return Complex(newRe, newIm)
+
     def __mul__(self, other):
         if isinstance(other, Complex):
             newRe = self.re * other.re - self.im * other.im
@@ -29,6 +33,7 @@ class Complex:
             raise ComplexError(self, other)
         return Complex(newRe, newIm)
         __rmul__ = __mul__
+
 
 a = Complex(1, 1)
 try:
